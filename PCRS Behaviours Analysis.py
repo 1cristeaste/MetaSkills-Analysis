@@ -53,6 +53,15 @@ if __name__ == "__main__":
     print(mannwhitneyu(grades_Agree_Show, grades_Agree_No_Show))
     print("Students who Disagree with guessing")
     print(mannwhitneyu(grades_Disagree_Show, grades_Disagree_No_Show))
+    print("Num Grades Agree Show")
+    print(len(grades_Agree_Show))
+    print("Num Grades Agree No Show")
+    print(len(grades_Agree_No_Show))
+    print("Num Grades Disagree Show")
+    print(len(grades_Disagree_Show))
+    print("Num Grades Disagree No Show")
+    print(len(grades_Disagree_No_Show))
+
 
     plt.hist(x=grades_Disagree_Show, density=True, label="Received daily planning intervention", alpha=0.3)
     plt.hist(x=grades_Disagree_No_Show, density=True, label="No daily planning intervention", alpha=0.3)
