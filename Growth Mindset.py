@@ -19,8 +19,9 @@ if __name__ == "__main__":
 
     midterm_question = "Q300"
 
-    df = join_w_grades("cleaned_grades.csv", "cleaned_metaskills_1.csv")
-    df_Midterm_Survey = pd.read_csv("cleaned_midterm_survey.csv")
+    df = join_w_grades("Data/cleaned_grades.csv",
+                       "Data/cleaned_metaskills_1.csv")
+    df_Midterm_Survey = pd.read_csv("Data/cleaned_midterm_survey.csv")
     df_MS_Grades = pd.merge(df, df_Midterm_Survey, left_on="Q62_2", right_on="Q2_2_TEXT")
 
     guessed_PCRS_Agree = df_MS_Grades.loc[(df_MS_Grades[midterm_question] == "7-Strongly agree") |

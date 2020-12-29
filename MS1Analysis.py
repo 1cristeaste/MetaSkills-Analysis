@@ -22,7 +22,8 @@ if __name__ == "__main__":
         return df
 
 
-    df = join_w_grades("cleaned_grades.csv", "cleaned_metaskills_1.csv")
+    df = join_w_grades("Data/cleaned_grades.csv",
+                       "Data/cleaned_metaskills_1.csv")
     # Choosing to disregard the "Neither Agree nor Disagree" section since they
     # don't seem to have an opinion
     Show_Strongly_Agree = df.loc[(df["Q124"] == "Strongly Agree") |

@@ -9,7 +9,8 @@ if __name__ == "__main__":
         return df
 
 
-    df = join_w_grades("cleaned_grades.csv", "cleaned_metaskills_3.csv")
+    df = join_w_grades("Data/cleaned_grades.csv",
+                       "Data/cleaned_metaskills_3.csv")
     Show_CBT = df.loc[df["showcbt"] == "yes"]
     No_Show_CBT = df.loc[df["showcbt"] == "no"]
     Grades_Received_CBT = Show_CBT["Midterm Current Score"]

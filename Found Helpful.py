@@ -18,7 +18,8 @@ if __name__ == "__main__":
         return df
 
     Growth_Question = "Q100"
-    df = join_w_grades("cleaned_grades.csv", "cleaned_metaskills_1.csv")
+    df = join_w_grades("Data/cleaned_grades.csv",
+                       "Data/cleaned_metaskills_1.csv")
 
     Disliked_Growth = df.loc[(df[Growth_Question] == "Strongly Disagree") |
                           (df[Growth_Question] == "Mostly Disagree") |
@@ -37,7 +38,7 @@ if __name__ == "__main__":
 
     print(mannwhitneyu(grades_Liked_Growth, grades_Disliked_Growth))
     print("Num of Students who Liked the Growth Intervention")
-    print (len(grades_Liked_Growth))
+    print(len(grades_Liked_Growth))
     print("Num of Students who disliked the Growth Intervention")
     print(len(grades_Disliked_Growth))
 
