@@ -18,8 +18,8 @@ if __name__ == "__main__":
         return df
 
     Growth_Question = "Q100"
-    df = join_w_grades("Data/cleaned_grades.csv",
-                       "Data/cleaned_metaskills_1.csv")
+    df = join_w_grades("../Data/cleaned_grades.csv",
+                       "../Data/cleaned_metaskills_1.csv")
 
     Disliked_Growth = df.loc[(df[Growth_Question] == "Strongly Disagree") |
                           (df[Growth_Question] == "Mostly Disagree") |

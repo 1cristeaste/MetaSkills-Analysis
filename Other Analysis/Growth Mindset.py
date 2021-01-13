@@ -14,29 +14,30 @@ if __name__ == "__main__":
         df_mskills1 = pd.read_csv(metaskills_resp_filepath)
         df = pd.merge(df_mskills1, df_grades, left_on="Q62_2", right_on="SIS Login ID")
         # "Q2_2_TEXT" -- cleaned midterm survey
-        # "Q62_2" -- midterm survey 1
+        # "Q62_2" -- ms 1
         return df
 
-    midterm_question = "Q222"
+    midterm_question = "Q300"
 
-    df = join_w_grades("Data/cleaned_grades.csv",
+    df = join_w_grades("../Data/cleaned_grades.csv",
                        "Data/cleaned_metaskills_1.csv")
-    df_Midterm_Survey = pd.read_csv("Data/cleaned_midterm_survey.csv")
+    df_Midterm_Survey = pd.read_csv("../Data/cleaned_midterm_survey.csv")
     df_MS_Grades = pd.merge(df, df_Midterm_Survey, left_on="Q62_2", right_on="Q2_2_TEXT")
 
     guessed_PCRS_Agree = df_MS_Grades.loc[(df_MS_Grades[midterm_question] == "7-Strongly agree") |
-                                        (df_MS_Grades[midterm_question] == "6-Agree") |
-                                        (df_MS_Grades[midterm_question] == "5-Somewhat agree")]
+                                          (df_MS_Grades[midterm_question] == "6-Agree") |
+                                          (df_MS_Grades[midterm_question] == "5-Somewhat agree")]
 
     guessed_PCRS_Disagree = df_MS_Grades.loc[(df_MS_Grades[midterm_question] == "1-Strongly disagree") |
-                                    (df_MS_Grades[midterm_question] == "2-Disagree") |
-                                    (df_MS_Grades[midterm_question] == "3-Somewhat disagree")]
+                                             (df_MS_Grades[midterm_question] == "2-Disagree") |
+                                             (df_MS_Grades[midterm_question] == "3-Somewhat disagree")]
 
-    Agree_PCRS_Show_Exam = guessed_PCRS_Agree.loc[guessed_PCRS_Agree["showdailyplan"] == "yes"]
-    Agree_PCRS_No_Show_Exam = guessed_PCRS_Agree.loc[guessed_PCRS_Agree["showdailyplan"] == "no"]
+    # People who have growth mindset believe they can change (Agree)
+    Agree_PCRS_Show_Exam = guessed_PCRS_Agree.loc[guessed_PCRS_Agree["showgrowthmindset"] == "yes"]
+    Agree_PCRS_No_Show_Exam = guessed_PCRS_Agree.loc[guessed_PCRS_Agree["showgrowthmindset"] == "no"]
 
-    Disagree_PCRS_Show_Exam = guessed_PCRS_Disagree.loc[guessed_PCRS_Disagree["showdailyplan"] == "yes"]
-    Disagree_PCRS_No_Show_Exam = guessed_PCRS_Disagree.loc[guessed_PCRS_Disagree["showdailyplan"] == "no"]
+    Disagree_PCRS_Show_Exam = guessed_PCRS_Disagree.loc[guessed_PCRS_Disagree["showgrowthmindset"] == "yes"]
+    Disagree_PCRS_No_Show_Exam = guessed_PCRS_Disagree.loc[guessed_PCRS_Disagree["showgrowthmindset"] == "no"]
 
     grades_Agree_Show = Agree_PCRS_Show_Exam["Midterm Current Score"]
     grades_Agree_Show = grades_Agree_Show.dropna()
@@ -50,10 +51,18 @@ if __name__ == "__main__":
     grades_Disagree_No_Show = Disagree_PCRS_No_Show_Exam["Midterm Current Score"]
     grades_Disagree_No_Show = grades_Disagree_No_Show.dropna()
 
-    print("Students who Agree that they guess")
+    print("Students who Agree that procrastination is something you can change")
     print(mannwhitneyu(grades_Agree_Show, grades_Agree_No_Show))
-    print("Students who Disagree with guessing")
+    print("Students who Disagree that procrastination is something you can change")
     print(mannwhitneyu(grades_Disagree_Show, grades_Disagree_No_Show))
+
+    plt.hist(x=grades_Disagree_Show, density=True, label="Received growth mindset intervention", alpha=0.3)
+    plt.hist(x=grades_Disagree_No_Show, density=True, label="No growth mindset intervention", alpha=0.3)
+    plt.title("Students who Disagree that procrastination is something you can change")
+    plt.legend()
+    plt.savefig("Disagreed_Growth_Mindset")
+
+
     print("Num Grades Agree Show")
     print(len(grades_Agree_Show))
     print("Num Grades Agree No Show")
@@ -62,11 +71,4 @@ if __name__ == "__main__":
     print(len(grades_Disagree_Show))
     print("Num Grades Disagree No Show")
     print(len(grades_Disagree_No_Show))
-
-
-    plt.hist(x=grades_Disagree_Show, density=True, label="Received daily planning intervention", alpha=0.3)
-    plt.hist(x=grades_Disagree_No_Show, density=True, label="No daily planning intervention", alpha=0.3)
-    plt.title("Students who disagreed that they guess")
-    plt.legend()
-    plt.savefig("Disagreed_Daily_Planning")
 

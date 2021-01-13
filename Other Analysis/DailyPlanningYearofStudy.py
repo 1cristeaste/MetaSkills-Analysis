@@ -35,9 +35,9 @@ if __name__ == "__main__":
     Daily_Planning = "Q58"
     print("t1")
 
-    df = join_w_grades("Data/cleaned_grades.csv",
+    df = join_w_grades("../Data/cleaned_grades.csv",
                        "Data/cleaned_metaskills_1.csv")
-    df = pd.merge(df, pd.read_csv("Data/cleaned_metaskills_3.csv"),
+    df = pd.merge(df, pd.read_csv("../Data/cleaned_metaskills_3.csv"),
                   left_on="Q62_2", right_on="Q10_2")
 
     print("t2")
